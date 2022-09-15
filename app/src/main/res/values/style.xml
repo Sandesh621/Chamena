@@ -9,5 +9,6 @@
     <dimen name="title_font_size">18sp</dimen>
     <dimen name="body_font_size">16sp</dimen>
     <dimen name="default_elevation">5dp</dimen>
+    <dimen name="header_font_size">21sp</dimen>
 
 </resources>

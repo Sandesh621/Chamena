@@ -1,7 +1,10 @@
 package com.bcis.chamena;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +24,8 @@ import com.bcis.chamena.common.RecyclerViewMargin;
 import com.bcis.chamena.databinding.ActivityMainBinding;
 import com.bcis.chamena.databinding.FoodItemBinding;
 import com.bcis.chamena.databinding.FoodItemLayoutBinding;
+import com.bcis.chamena.fragment.AdminHomeFragment;
+import com.bcis.chamena.fragment.UserHomeFragment;
 import com.bcis.chamena.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -29,16 +34,16 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-    ArrayList<Dummy> data = new ArrayList<>();
+
+    public ActionBarDrawerToggle actionBarDrawerToggle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding= ActivityMainBinding.inflate(getLayoutInflater());
-        setSupportActionBar(binding.toolbar);
         setContentView(binding.getRoot());
-       loadData();
-       bindView();
-
+       setUpToolbar();
+       setUpDrawer();
        //Todo: Dummy
         binding.logo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,31 +58,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void loadData(){
-                ArrayList<String> items = new ArrayList<String>();
-        for(int i=0;i<10;i++){
-            items.add("Item "+i);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(FirebaseAuth.getInstance().getUid()==null){
+            changeFragment(new UserHomeFragment());
+        }else{
+            changeFragment(new AdminHomeFragment());
         }
-        data.add(new Dummy("Foods",items,R.drawable.burger));
-        data.add(new Dummy("Drinks",items,R.drawable.cup));
     }
-    void bindView(){
 
-        for (Dummy item:data) {
-            FoodItemLayoutBinding foodItemBinding = FoodItemLayoutBinding.inflate(getLayoutInflater());
-            foodItemBinding.category.setText(item.category);
-            foodItemBinding.image.setImageDrawable(getDrawable(item.icon));
-            FoodItemAdapter adapter = new FoodItemAdapter(item.items);
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-        RecyclerView foodRecyclerView = foodItemBinding.foodItemList;
-        foodRecyclerView.setLayoutManager(manager);
-        foodRecyclerView.setHasFixedSize(true);
-        foodRecyclerView.addItemDecoration(new RecyclerViewMargin(25,item.items.size()));
-        foodRecyclerView.setAdapter(adapter);
-        binding.root.addView(foodItemBinding.getRoot());
-        }
-
+    void changeFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
+
+    void setUpToolbar(){
+        setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    void setUpDrawer(){
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, binding.drawer,binding.toolbar, R.string.nav_open, R.string.nav_close);
+        actionBarDrawerToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.black));
+        binding.drawer.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,14 +114,5 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-class Dummy{
-    String category;
-    ArrayList<String> items;
-    int icon;
-    Dummy(String category,ArrayList<String> items,int icon){
-        this.category=category;
-        this.items=items;
-        this.icon=icon;
-    }
-}
+
 

@@ -71,7 +71,6 @@ public class Register extends AppCompatActivity {
         binding.email.setText("");
         binding.pswd.setText("");
         binding.cpswd.setText("");
-
     }
 
 
