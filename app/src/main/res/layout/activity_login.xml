@@ -60,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:textColorHint="@color/grey"
+                android:textColor="@color/black"
                 android:background="@drawable/inputborder"
                 android:hint="@string/password"
                 />

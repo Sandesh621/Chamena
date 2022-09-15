@@ -53,12 +53,12 @@ public class Register extends AppCompatActivity {
                 if(status==Status.COMPLETED){
                     clear();
                 }
-                Toast.makeText(Register.this, status.name(), Toast.LENGTH_SHORT).show();
             }
         });
         viewModel._message.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
+                if(s==null)return;
                 Toast.makeText(Register.this, s, Toast.LENGTH_SHORT).show();
             }
         });

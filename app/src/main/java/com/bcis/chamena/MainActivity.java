@@ -27,7 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    final int  SPLASH_TIME=1500;
+
     ActivityMainBinding binding;
     ArrayList<Dummy> data = new ArrayList<>();
     @Override

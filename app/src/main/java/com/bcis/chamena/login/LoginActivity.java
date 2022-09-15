@@ -49,12 +49,13 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent =new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
-                Toast.makeText(LoginActivity.this, status.name(), Toast.LENGTH_SHORT).show();
+
             }
         });
         loginViewModel._message.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
+                if(s==null)return;
                 Toast.makeText(LoginActivity.this, s, Toast.LENGTH_SHORT).show();
             }
         });
