@@ -70,7 +70,7 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey"
                 android:focusedByDefault="false"
-                android:inputType="text"
+                android:inputType="phone"
                 android:background="@drawable/inputborder"
                 />
         </com.google.android.material.textfield.TextInputLayout>
