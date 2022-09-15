@@ -22,6 +22,7 @@ import com.bcis.chamena.databinding.ActivityMainBinding;
 import com.bcis.chamena.databinding.FoodItemBinding;
 import com.bcis.chamena.databinding.FoodItemLayoutBinding;
 import com.bcis.chamena.login.LoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -37,6 +38,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
        loadData();
        bindView();
+
+       //Todo: Dummy
+        binding.logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(FirebaseAuth.getInstance().getUid()==null)return;
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(MainActivity.this,MainActivity.class));
+                finish();
+            }
+        });
+        /*Todo: Dummy Code */
 
     }
 
@@ -69,11 +82,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.chamena_navbar,menu);
+        if(FirebaseAuth.getInstance().getUid()!=null){
+            MenuItem item = menu.findItem(R.id.user_login);
+            item.setVisible(false);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
         switch (item.getItemId()){
             case R.id.cart:
                 Toast.makeText(this, "Nice", Toast.LENGTH_SHORT).show();

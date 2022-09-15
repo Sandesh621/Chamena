@@ -17,6 +17,7 @@
          android:layout_height="?attr/actionBarSize"
          app:title="@string/app_name">
          <ImageView
+             android:id="@+id/logo"
              android:src="@drawable/logo"
              android:layout_width="60dp"
              android:scaleType="centerCrop"
