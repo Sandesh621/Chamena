@@ -1,4 +1,4 @@
-package com.bcis.chamena.login;
+package com.bcis.chamena.register;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,26 +8,24 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bcis.chamena.databinding.ActivityLoginBinding;
-import com.bcis.chamena.databinding.ActivitySplashBinding;
-import com.bcis.chamena.register.Register;
+import com.bcis.chamena.databinding.ActivityRegisterBinding;
+import com.bcis.chamena.login.LoginActivity;
 
-public class LoginActivity extends AppCompatActivity {
-    ActivityLoginBinding binding;
+public class Register extends AppCompatActivity {
+    ActivityRegisterBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= ActivityLoginBinding.inflate(getLayoutInflater());
+        binding= ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        binding.register.setOnClickListener(new View.OnClickListener() {
+      //  setContentView(R.layout.activity_register);
+        binding.login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(getApplicationContext(), Register.class);
+                Intent intent= new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
-
-
-
     }
 }

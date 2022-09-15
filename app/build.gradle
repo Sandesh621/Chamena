@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -7,11 +8,11 @@ android {
 
     defaultConfig {
         applicationId "com.bcis.chamena"
-        minSdk 21
+        minSdk 22
         targetSdk 32
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -35,7 +36,23 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.google.firebase:firebase-firestore:21.4.0'
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
     testImplementation 'junit:junit:4.13.2'
+    //Todo: Added Dependencies
+    def lifecycle_version = "2.0.0"
+
+    // Todo: ViewModel and LiveData( used to store and manage UI related data in lifecycle conscious way.
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    //Todo: Used to convert json to object and vice-versa
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    //Todo: For network:: image loading and caching
+    implementation 'com.github.bumptech.glide:annotations:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'com.github.bumptech.glide:glide:4.0.0'
+
+    //Todo:End
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
