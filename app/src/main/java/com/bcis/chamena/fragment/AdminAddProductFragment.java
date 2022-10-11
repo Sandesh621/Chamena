@@ -1,7 +1,6 @@
 package com.bcis.chamena.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bcis.chamena.databinding.AdminAddprdBinding;
 import com.bcis.chamena.databinding.AdminHomeLayoutBinding;
 
 
-public class AdminHomeFragment extends Fragment {
-    AdminHomeLayoutBinding binding;
+public class AdminAddProductFragment extends Fragment {
+    AdminAddprdBinding binding;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding= AdminHomeLayoutBinding.inflate(getLayoutInflater());
+        binding= AdminAddprdBinding.inflate(getLayoutInflater());
         return binding.getRoot();
     }
 

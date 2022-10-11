@@ -18,8 +18,7 @@
         <activity
             android:name=".register.Register"
             android:exported="false"
-            android:theme="@style/Theme.NoActionbar"/>
-
+            android:theme="@style/Theme.NoActionbar" />
         <activity
             android:name=".login.LoginActivity"
             android:exported="false"

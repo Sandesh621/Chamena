@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     void login(){
         String email = binding.email.getText().toString();
+        System.out.println(email);
         String password = binding.pswd.getText().toString();
         LoginViewModel loginViewModel = new LoginViewModel();
         loginViewModel._status.observe(this, new Observer<Status>() {

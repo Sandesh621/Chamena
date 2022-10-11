@@ -9,17 +9,23 @@
         <entry key="..\:/Project/app/src/main/res/drawable/inputborder.xml" value="0.2545" />
         <entry key="..\:/Project/app/src/main/res/drawable/inputborder2.xml" value="0.185" />
         <entry key="..\:/Project/app/src/main/res/drawable/itemborder.xml" value="0.185" />
+        <entry key="..\:/Project/app/src/main/res/layout/activity_admin.xml" value="0.25" />
         <entry key="..\:/Project/app/src/main/res/layout/activity_login.xml" value="0.136" />
         <entry key="..\:/Project/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Project/app/src/main/res/layout/activity_register.xml" value="0.264" />
         <entry key="..\:/Project/app/src/main/res/layout/activity_splash.xml" value="0.22826086956521738" />
+        <entry key="..\:/Project/app/src/main/res/layout/admin_addprd.xml" value="0.25" />
         <entry key="..\:/Project/app/src/main/res/layout/admin_home_layout.xml" value="0.25" />
+        <entry key="..\:/Project/app/src/main/res/layout/admin_menu.xml" value="0.25" />
+        <entry key="..\:/Project/app/src/main/res/layout/admin_orders.xml" value="0.25" />
         <entry key="..\:/Project/app/src/main/res/layout/food_item.xml" value="0.264" />
         <entry key="..\:/Project/app/src/main/res/layout/food_item_layout.xml" value="0.23052536231884058" />
+        <entry key="..\:/Project/app/src/main/res/layout/frg_admin_cart.xml" value="0.24895833333333334" />
         <entry key="..\:/Project/app/src/main/res/layout/header_layout.xml" value="0.264" />
         <entry key="..\:/Project/app/src/main/res/layout/item.xml" value="0.264" />
         <entry key="..\:/Project/app/src/main/res/layout/user_home_layout.xml" value="0.25" />
         <entry key="..\:/Project/app/src/main/res/menu/chamena_navbar.xml" value="0.25" />
+        <entry key="..\:/Project/app/src/main/res/menu/drawer_menu.xml" value="0.25" />
       </map>
     </option>
   </component>
