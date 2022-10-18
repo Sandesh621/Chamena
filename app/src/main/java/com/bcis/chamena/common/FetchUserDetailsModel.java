@@ -28,12 +28,23 @@ public class FetchUserDetailsModel extends ViewModel {
         details.fetch(userId).addListener(new FetchUserDetails.AddOnUserDataFetchListener() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                System.out.println(documentSnapshot.getId()+"=>"+documentSnapshot.getData());
+                boolean isAdmin = false;
+                if(documentSnapshot.contains("isAdmin")){
+                    isAdmin = documentSnapshot.getBoolean("isAdmin");
+                }
+                String fullName = documentSnapshot.getString("fullName");
+                String email = documentSnapshot.getString("email");
+                String office = documentSnapshot.getString("collegeOffice");
+                String phoneNumber= documentSnapshot.getString("phoneNumber");
+                User currentUser =new User(userId,fullName,phoneNumber,office,email,isAdmin);
+                user.postValue(currentUser);
+                status.setValue(Status.COMPLETED);
             }
 
             @Override
             public void onFailure(Exception e) {
-                System.out.println("Exception is :"+e);
+                Log.e("Error",e.getMessage());
+               status.setValue(Status.FAILURE);
             }
         });
 

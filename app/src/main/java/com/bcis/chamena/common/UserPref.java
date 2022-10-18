@@ -31,6 +31,9 @@ public class UserPref {
        User user = gson.fromJson(data,User.class);
        return user;
    }
+   public void clearPref(){
+        editor.clear().commit();
+   }
 
 
 }

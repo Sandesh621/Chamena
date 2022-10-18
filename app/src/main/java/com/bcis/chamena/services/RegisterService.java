@@ -1,17 +1,13 @@
 package com.bcis.chamena.services;
 
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.bcis.chamena.model.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegisterService {
@@ -32,14 +28,15 @@ public class RegisterService {
             @Override
             public void onSuccess(AuthResult authResult) {
                 String id = authResult.getUser().getUid();
-                user.id=id;
-                db.collection("users").add(user)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                User currentUser = new User(id,user.fullName,user.phoneNumber,user.collegeOffice,user.email,user.isAdmin);
+                db.collection("users").document(id).set(currentUser)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                registerServiceInterface.onSuccess(documentReference);
+                            public void onSuccess(Void unused) {
+                                registerServiceInterface.onSuccess();
                             }
-                        }).addOnFailureListener(new OnFailureListener() {
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 registerServiceInterface.onFailure(e.getMessage());
@@ -65,7 +62,7 @@ public class RegisterService {
       return user.email.trim().matches(emailPattern);
     }
    public interface RegisterServiceListener{
-        default void onSuccess(DocumentReference documentReference){}
+        default void onSuccess(){}
         default void onFailure(String error){}
     }
 

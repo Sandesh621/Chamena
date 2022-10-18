@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -35,14 +37,11 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                fetch();
-                Intent intent=new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                fetch(getApplicationContext());
             }
         },3000);
     }
-    void fetch(){
+  public   void fetch(Context context){
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if(auth.getCurrentUser()!=null){
             FetchUserDetailsModel detailsModel =new FetchUserDetailsModel(auth.getCurrentUser().getUid());
@@ -50,18 +49,31 @@ public class SplashActivity extends AppCompatActivity {
             detailsModel._user.observe(this, new Observer<User>() {
                 @Override
                 public void onChanged(User user) {
-                    UserPref pref= new UserPref(user,getApplicationContext());
+                    UserPref pref= new UserPref(user,context);
                     pref.saveUserPref();
                 }
             });
             detailsModel._status.observe(this, new Observer<Status>() {
                 @Override
                 public void onChanged(Status status) {
-
+                    switch (status){
+                        case COMPLETED:
+                        case FAILURE:
+                            navigateToMainActivity(context);
+                            break;
+                    }
                 }
             });
         }
+        else{
+            navigateToMainActivity(context);
+        }
         return;
+    }
+   public void navigateToMainActivity(Context packageContext){
+        Intent intent=new Intent(packageContext, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }

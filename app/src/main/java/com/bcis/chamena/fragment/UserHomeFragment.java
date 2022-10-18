@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bcis.chamena.R;
 import com.bcis.chamena.adapter.FoodItemAdapter;
@@ -30,8 +31,14 @@ public class UserHomeFragment extends Fragment {
         bindView();
         return binding.getRoot();
     }
-    void bindView(){
 
+    void bindView(){
+        binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                binding.swipeRefresh.setRefreshing(false);
+            }
+        });
         for (Dummy item:data) {
             FoodItemLayoutBinding foodItemBinding = FoodItemLayoutBinding.inflate(getLayoutInflater());
             foodItemBinding.category.setText(item.category);
@@ -45,6 +52,7 @@ public class UserHomeFragment extends Fragment {
             foodRecyclerView.setAdapter(adapter);
             binding.root.addView(foodItemBinding.getRoot());
         }
+
 
     }
 

@@ -1,5 +1,7 @@
 package com.bcis.chamena.common;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,7 +23,7 @@ public class FetchUserDetails {
 
     FetchUserDetails fetch(String userId){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("user").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){

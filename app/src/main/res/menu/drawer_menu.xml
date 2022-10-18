@@ -13,8 +13,8 @@
         app:showAsAction="withText"
          />
     <item
-        android:id="@+id/edit"
-        android:title="Edit Product"
+        android:id="@+id/logout"
+        android:title="Logout"
         app:showAsAction="withText"
         />
 
