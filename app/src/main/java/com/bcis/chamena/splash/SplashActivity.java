@@ -1,6 +1,8 @@
 package com.bcis.chamena.splash;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +12,13 @@ import android.view.animation.AnimationUtils;
 
 import com.bcis.chamena.MainActivity;
 import com.bcis.chamena.R;
+import com.bcis.chamena.common.FetchUserDetailsModel;
+import com.bcis.chamena.common.Status;
+import com.bcis.chamena.common.UserPref;
 import com.bcis.chamena.databinding.ActivitySplashBinding;
+import com.bcis.chamena.model.User;
 import com.bcis.chamena.register.Register;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashActivity extends AppCompatActivity {
       ActivitySplashBinding binding;
@@ -28,10 +35,33 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                fetch();
                 Intent intent=new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
         },3000);
     }
+    void fetch(){
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if(auth.getCurrentUser()!=null){
+            FetchUserDetailsModel detailsModel =new FetchUserDetailsModel(auth.getCurrentUser().getUid());
+            detailsModel.fetch();
+            detailsModel._user.observe(this, new Observer<User>() {
+                @Override
+                public void onChanged(User user) {
+                    UserPref pref= new UserPref(user,getApplicationContext());
+                    pref.saveUserPref();
+                }
+            });
+            detailsModel._status.observe(this, new Observer<Status>() {
+                @Override
+                public void onChanged(Status status) {
+
+                }
+            });
+        }
+        return;
+    }
+
 }

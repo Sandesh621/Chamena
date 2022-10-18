@@ -12,7 +12,10 @@
         android:title="Add Product"
         app:showAsAction="withText"
          />
-
-
+    <item
+        android:id="@+id/edit"
+        android:title="Edit Product"
+        app:showAsAction="withText"
+        />
 
 </menu>

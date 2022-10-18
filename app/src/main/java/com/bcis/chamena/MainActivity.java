@@ -3,37 +3,23 @@ package com.bcis.chamena;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.TaskStackBuilder;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.IntRange;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.bcis.chamena.adapter.FoodItemAdapter;
-import com.bcis.chamena.common.RecyclerViewMargin;
 import com.bcis.chamena.databinding.ActivityMainBinding;
-import com.bcis.chamena.databinding.FoodItemBinding;
-import com.bcis.chamena.databinding.FoodItemLayoutBinding;
 import com.bcis.chamena.fragment.AdminAddProductFragment;
 import com.bcis.chamena.fragment.AdminHomeFragment;
 import com.bcis.chamena.fragment.UserHomeFragment;
 import com.bcis.chamena.login.LoginActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -132,12 +118,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();
-        if (id==R.id.add_product){
-            changeFragment(new AdminAddProductFragment());
+        switch (id){
+            case R.id.add_product:
+                changeFragment(new AdminAddProductFragment());
+                break;
+            case R.id.home:
+                changeFragment(new AdminHomeFragment());
+            default:
+                changeFragment(new AdminHomeFragment());
         }
-        if(id==R.id.home){
-            changeFragment(new AdminHomeFragment());
-        }
+
+
+
         binding.drawer.closeDrawer(GravityCompat.START);
         return true;
     }
