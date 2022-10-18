@@ -1,5 +1,7 @@
 package com.bcis.chamena.common;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -14,7 +16,7 @@ public class FetchProductsDetailsModel extends ViewModel {
     private MutableLiveData<Status> status = new MutableLiveData<>();
     public LiveData<List<Product>> _products =products;
     public LiveData<Status> _status = status;
-    void fetchAll(){
+   public void fetchAll(){
         status.setValue(Status.PROGRESS);
         FetchProductsDetails fetchProductsDetails=new FetchProductsDetails();
         fetchProductsDetails.fetchAll().addOnFetchListener(new FetchProductsDetails.AddOnFetchListener() {

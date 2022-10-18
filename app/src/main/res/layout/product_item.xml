@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="220dp"
+    android:layout_height="wrap_content"
+    app:cardElevation="@dimen/default_margin">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/image"
+                android:src="@drawable/burger"
+                android:layout_gravity="center"
+                android:scaleType="center"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"/>
+            <TextView
+                android:id="@+id/productname"
+                android:text="Product Name"
+                android:textColor="@color/black"
+                android:padding="@dimen/default_margin"
+                android:textSize="21sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/price"
+                android:text="Price:$150"
+                android:textColor="@color/black"
+                android:padding="@dimen/default_margin"
+                android:textSize="21sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/edit"
+                    android:src="@drawable/edit"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/delete"
+                    android:src="@drawable/delete"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
+</com.google.android.material.card.MaterialCardView>
