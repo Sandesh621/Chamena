@@ -40,6 +40,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(binding.getRoot());
        setUpToolbar();
        setUpDrawer();
+
+        if(FirebaseAuth.getInstance().getUid()==null){
+            changeFragment(new UserHomeFragment());
+        }else{
+            if(isAdmin()){
+                changeFragment(new AdminHomeFragment());
+            }else{
+                changeFragment(new UserHomeFragment());
+            }
+        }
     }
     boolean isAdmin(){
         User user = new UserPref(null,getApplicationContext()).getUserPref();
@@ -51,16 +61,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart() {
         super.onStart();
         removeMenu();
-        if(FirebaseAuth.getInstance().getUid()==null){
-            changeFragment(new UserHomeFragment());
-        }else{
-            if(isAdmin()){
-                changeFragment(new AdminHomeFragment());
-            }else{
-                changeFragment(new UserHomeFragment());
-            }
-
-        }
     }
 
     void changeFragment(Fragment fragment){
