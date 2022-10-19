@@ -36,7 +36,11 @@ public class FetchProductsDetails {
                             String category = snapshot.getString("category");
                             String imageUrl = snapshot.getString("productUrl");
                             Number price = snapshot.getDouble("price");
-                            products.add(new Product(addedBy,productName,price,category,imageUrl));
+                            String imagePath="";
+                            if(snapshot.contains("imagePath")){
+                                imagePath=snapshot.getString("imagePath");
+                            }
+                            products.add(new Product(addedBy,productName,price,category,imageUrl,imagePath,snapshot.getId()));
                         }
                         listener.onSuccess(products);
                        }else{

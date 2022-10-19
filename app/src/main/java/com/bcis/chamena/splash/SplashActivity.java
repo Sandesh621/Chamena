@@ -1,5 +1,6 @@
 package com.bcis.chamena.splash;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,12 +16,22 @@ import android.view.animation.AnimationUtils;
 import com.bcis.chamena.MainActivity;
 import com.bcis.chamena.R;
 import com.bcis.chamena.common.FetchUserDetailsModel;
+import com.bcis.chamena.common.Setting;
+import com.bcis.chamena.common.SettingPref;
 import com.bcis.chamena.common.Status;
 import com.bcis.chamena.common.UserPref;
 import com.bcis.chamena.databinding.ActivitySplashBinding;
 import com.bcis.chamena.model.User;
 import com.bcis.chamena.register.Register;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
+import java.util.Set;
 
 public class SplashActivity extends AppCompatActivity {
       ActivitySplashBinding binding;
@@ -41,7 +52,14 @@ public class SplashActivity extends AppCompatActivity {
             }
         },3000);
     }
-  public   void fetch(Context context){
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        fetchSetting();
+    }
+
+    public   void fetch(Context context){
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if(auth.getCurrentUser()!=null){
             FetchUserDetailsModel detailsModel =new FetchUserDetailsModel(auth.getCurrentUser().getUid());
@@ -75,5 +93,19 @@ public class SplashActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
+private void fetchSetting(){
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    db.collection("settings").document("appsetting").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        @Override
+        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+            if(task.isSuccessful()){
+                DocumentSnapshot snapshot = task.getResult();
+                SettingPref setting = new SettingPref(getApplicationContext());
+                Setting setting1=new Setting();
+                setting1.currencyCode=snapshot.getString("currency_code");
+                setting.saveSetting(setting1);
+            }
+        }
+    });
+}
 }

@@ -2,9 +2,9 @@ package com.bcis.chamena.common;
 
 
 import android.graphics.Rect;
-import android.support.annotation.IntRange;
 import android.view.View;
 
+import androidx.annotation.IntRange;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class RecyclerViewMargin extends RecyclerView.ItemDecoration {

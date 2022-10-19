@@ -13,6 +13,16 @@
         app:showAsAction="withText"
          />
     <item
+        android:id="@+id/orders"
+        android:title="Orders"
+        app:showAsAction="withText"
+        />
+    <item
+        android:id="@+id/myorder"
+        android:title="My Orders"
+        app:showAsAction="withText"
+        />
+    <item
         android:id="@+id/logout"
         android:title="Logout"
         app:showAsAction="withText"

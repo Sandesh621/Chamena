@@ -49,8 +49,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     //Todo: For network:: image loading and caching
     implementation 'com.github.bumptech.glide:annotations:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
-    implementation 'com.github.bumptech.glide:glide:4.0.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
 
     //Todo: Swipe to Refresh Layout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
