@@ -51,7 +51,7 @@ public class RegisterViewModel extends ViewModel {
         registerService.register();
         registerService.addOnRegisterServiceListener(new RegisterService.RegisterServiceListener() {
             @Override
-            public void onSuccess(DocumentReference documentReference) {
+            public void onSuccess() {
                 status.setValue(Status.COMPLETED);
                 message.setValue("User Created Successfully");
             }

@@ -10,27 +10,46 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bcis.chamena.R;
 import com.bcis.chamena.adapter.FoodItemAdapter;
 import com.bcis.chamena.common.RecyclerViewMargin;
+import com.bcis.chamena.common.UserPref;
 import com.bcis.chamena.databinding.FoodItemLayoutBinding;
+import com.bcis.chamena.databinding.GreetLayoutBinding;
 import com.bcis.chamena.databinding.UserHomeLayoutBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
 public class UserHomeFragment extends Fragment {
     UserHomeLayoutBinding binding;
     ArrayList<Dummy> data = new ArrayList<>();
+    GreetLayoutBinding greetLayoutBinding;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = UserHomeLayoutBinding.inflate(getLayoutInflater());
+        greetLayoutBinding = GreetLayoutBinding.inflate(getLayoutInflater());
         loadData();
         bindView();
         return binding.getRoot();
     }
+
     void bindView(){
+        binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                binding.swipeRefresh.setRefreshing(false);
+            }
+        });
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
+            greetLayoutBinding.name.setText(new UserPref(null,getContext()).getUserPref().fullName);
+            binding.root.addView(greetLayoutBinding.getRoot());
+        }
+
 
         for (Dummy item:data) {
             FoodItemLayoutBinding foodItemBinding = FoodItemLayoutBinding.inflate(getLayoutInflater());
@@ -45,6 +64,7 @@ public class UserHomeFragment extends Fragment {
             foodRecyclerView.setAdapter(adapter);
             binding.root.addView(foodItemBinding.getRoot());
         }
+
 
     }
 

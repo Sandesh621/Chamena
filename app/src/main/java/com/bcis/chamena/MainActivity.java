@@ -3,37 +3,29 @@ package com.bcis.chamena;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.TaskStackBuilder;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.lifecycle.Observer;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.IntRange;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.bcis.chamena.adapter.FoodItemAdapter;
-import com.bcis.chamena.common.RecyclerViewMargin;
+import com.bcis.chamena.common.FetchUserDetailsModel;
+import com.bcis.chamena.common.Status;
+import com.bcis.chamena.common.UserPref;
 import com.bcis.chamena.databinding.ActivityMainBinding;
-import com.bcis.chamena.databinding.FoodItemBinding;
-import com.bcis.chamena.databinding.FoodItemLayoutBinding;
 import com.bcis.chamena.fragment.AdminAddProductFragment;
 import com.bcis.chamena.fragment.AdminHomeFragment;
 import com.bcis.chamena.fragment.UserHomeFragment;
 import com.bcis.chamena.login.LoginActivity;
+import com.bcis.chamena.model.User;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -49,33 +41,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
        setUpToolbar();
        setUpDrawer();
 
-       //Todo: Dummy
-        binding.logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(FirebaseAuth.getInstance().getUid()==null)return;
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainActivity.this,MainActivity.class));
-                finish();
+        if(FirebaseAuth.getInstance().getUid()==null){
+            changeFragment(new UserHomeFragment());
+        }else{
+            if(isAdmin()){
+                changeFragment(new AdminHomeFragment());
+            }else{
+                changeFragment(new UserHomeFragment());
             }
-        });
-
+        }
+    }
+    boolean isAdmin(){
+        User user = new UserPref(null,getApplicationContext()).getUserPref();
+        if(user==null)return false;
+        return user.isAdmin;
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if(FirebaseAuth.getInstance().getUid()==null){
-            changeFragment(new UserHomeFragment());
-        }else{
-            String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-            if(email.equals("computerstha12@gmail.com")||email.equals("chamena@gmail.com")){
-                changeFragment(new AdminHomeFragment());
-            }else{
-                changeFragment(new UserHomeFragment());
-            }
-
-        }
+        removeMenu();
     }
 
     void changeFragment(Fragment fragment){
@@ -132,14 +117,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();
-        if (id==R.id.add_product){
-            changeFragment(new AdminAddProductFragment());
-        }
-        if(id==R.id.home){
-            changeFragment(new AdminHomeFragment());
+        switch (id){
+            case R.id.add_product:
+                changeFragment(new AdminAddProductFragment());
+                break;
+            case R.id.logout:
+                logout();
+                break;
+            default:
+                switchHomeFragment();
         }
         binding.drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    void switchHomeFragment(){
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null&&isAdmin()){
+            changeFragment(new AdminHomeFragment());
+        }else{
+            changeFragment(new UserHomeFragment());
+        }
+    }
+    void removeMenu(){
+        Menu menu = binding.navigationView.getMenu();
+        //Check user is login or not
+        if(FirebaseAuth.getInstance().getCurrentUser()==null){
+            menu.removeItem(R.id.add_product);
+            menu.removeItem(R.id.logout);
+        }
+        if(!isAdmin()){
+            menu.removeItem(R.id.add_product);
+        }
+    }
+    void logout(){
+        if(FirebaseAuth.getInstance().getUid()==null)return;
+        new UserPref(null,getApplicationContext()).clearPref();
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(MainActivity.this,MainActivity.class));
+        finish();
     }
 }
 
