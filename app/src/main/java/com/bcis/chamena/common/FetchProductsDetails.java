@@ -40,7 +40,11 @@ public class FetchProductsDetails {
                             if(snapshot.contains("imagePath")){
                                 imagePath=snapshot.getString("imagePath");
                             }
-                            products.add(new Product(addedBy,productName,price,category,imageUrl,imagePath,snapshot.getId()));
+                            Number timestamp =null;
+                            if(snapshot.contains("timestamp")){
+                                timestamp=snapshot.getLong("timestamp");
+                            }
+                            products.add(new Product(addedBy,productName,price,category,imageUrl,imagePath,snapshot.getId(),timestamp));
                         }
                         listener.onSuccess(products);
                        }else{

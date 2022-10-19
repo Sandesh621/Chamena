@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.bcis.chamena.cart.CartActivity;
 import com.bcis.chamena.common.FetchUserDetailsModel;
 import com.bcis.chamena.common.Status;
 import com.bcis.chamena.common.UserPref;
@@ -93,10 +94,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         switch (item.getItemId()){
             case R.id.cart:
-                Toast.makeText(this, "Nice", Toast.LENGTH_SHORT).show();
+                Intent cartIntent = new Intent(this, CartActivity.class);
+                startActivity(cartIntent);
                 break;
             case R.id.user_login:
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
