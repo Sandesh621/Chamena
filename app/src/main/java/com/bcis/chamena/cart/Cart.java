@@ -4,4 +4,5 @@ public class Cart {
     public String docId = null;
      public  String productName = "";
      public  Double productPrice = null;
+     public int orderItems =1;
 }

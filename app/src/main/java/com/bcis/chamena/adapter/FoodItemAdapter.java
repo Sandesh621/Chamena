@@ -46,8 +46,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter<FoodItemAdapter.FoodIt
                cart.docId = items.get(pos).docId;
                cart.productName = items.get(pos).productName;
                cart.productPrice = items.get(pos).price.doubleValue();
-                CartModel.carts.add(cart);
-                CartModel.save();
+                CartModel.addToCart(cart);
                 Toast.makeText(context,"Added to Cart",Toast.LENGTH_LONG).show();
             }
         });
