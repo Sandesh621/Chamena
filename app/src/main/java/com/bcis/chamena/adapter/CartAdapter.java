@@ -34,7 +34,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemViewHo
     @NonNull
     @Override
     public CartItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CartItemBinding binding= CartItemBinding.inflate(LayoutInflater.from(context));
+        CartItemBinding binding= CartItemBinding.bind(View.inflate(parent.getContext(), R.layout.cart_item,null));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 MATCH_PARENT, WRAP_CONTENT);
         binding.getRoot().setLayoutParams(params);
