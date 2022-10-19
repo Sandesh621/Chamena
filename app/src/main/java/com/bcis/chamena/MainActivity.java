@@ -96,6 +96,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.cart:
+                if(isAdmin()){
+                    item.setVisible(false);
+                }
                 Intent cartIntent = new Intent(this, CartActivity.class);
                 startActivity(cartIntent);
                 break;
@@ -152,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             menu.removeItem(R.id.add_product);
         }else{
             menu.removeItem(R.id.myorder);
+
         }
     }
     void logout(){

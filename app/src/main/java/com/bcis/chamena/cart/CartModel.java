@@ -26,7 +26,6 @@ public class CartModel {
                 alreadyInCart=true;
                 int orderItems = item.orderItems;
                 orderItems+=1;
-                Log.e("Count", String.valueOf(orderItems));
                 item.orderItems=orderItems;
                break;
             }
@@ -36,13 +35,41 @@ public class CartModel {
         }
         save();
     }
-  private static void save(){
+
+    public static void removeFromCart(Cart cart){
+        boolean needToRemove=false;
+        for (Cart item:carts){
+            if(cart.docId.equals(item.docId)){
+                int orderItems = item.orderItems;
+                orderItems-=1;
+                if(orderItems==0){
+                    needToRemove=true;
+                }
+                item.orderItems=orderItems;
+                break;
+            }
+        }
+        if(needToRemove){
+            carts.remove(cart);
+            return;
+        }
+        save();
+    }
+
+
+    private static void save(){
       SharedPreferences pref = context.getSharedPreferences("cart",Context.MODE_PRIVATE);
       SharedPreferences.Editor editor = pref.edit();
       editor.clear();
       String cartData = gson.toJson(carts);
       editor.putString("cart",cartData);
       editor.commit();
+   }
+   public static void clearAllData(){
+       SharedPreferences pref = context.getSharedPreferences("cart",Context.MODE_PRIVATE);
+       SharedPreferences.Editor editor = pref.edit();
+       editor.clear();
+       editor.commit();
    }
    public static void init(){
        SharedPreferences pref = context.getSharedPreferences("cart",Context.MODE_PRIVATE);
