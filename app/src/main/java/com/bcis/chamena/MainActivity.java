@@ -22,6 +22,7 @@ import com.bcis.chamena.common.UserPref;
 import com.bcis.chamena.databinding.ActivityMainBinding;
 import com.bcis.chamena.fragment.AdminAddProductFragment;
 import com.bcis.chamena.fragment.AdminHomeFragment;
+import com.bcis.chamena.fragment.AdminOrdersFragment;
 import com.bcis.chamena.fragment.UserHomeFragment;
 import com.bcis.chamena.login.LoginActivity;
 import com.bcis.chamena.model.User;
@@ -127,6 +128,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.logout:
                 logout();
+                break;
+            case R.id.orders:
+                changeFragment(new AdminOrdersFragment());
                 break;
             default:
                 switchHomeFragment();

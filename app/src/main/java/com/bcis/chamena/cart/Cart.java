@@ -5,4 +5,5 @@ public class Cart {
      public  String productName = "";
      public  Double productPrice = null;
      public int orderItems =1;
+     public String imageUrl;
 }
