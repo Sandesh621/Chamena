@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bcis.chamena.adapter.AdminProductItemAdapter;
 import com.bcis.chamena.common.FetchProductsDetailsModel;
+import com.bcis.chamena.common.ManipulateProductDetails;
 import com.bcis.chamena.common.RecyclerViewMargin;
 import com.bcis.chamena.common.Status;
 import com.bcis.chamena.common.UserPref;
@@ -31,6 +33,7 @@ import java.util.List;
 public class AdminHomeFragment extends Fragment {
     AdminHomeLayoutBinding binding;
     GreetLayoutBinding greetLayoutBinding;
+    AdminProductItemAdapter adapter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,12 +42,12 @@ public class AdminHomeFragment extends Fragment {
         return binding.getRoot();
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         greetLayoutBinding.name.setText(new UserPref(null,getContext()).getUserPref().fullName);
         binding.root.addView(greetLayoutBinding.getRoot());
-
         fetchDataAndBind();
     }
     void fetchDataAndBind(){
@@ -61,14 +64,43 @@ public class AdminHomeFragment extends Fragment {
             @Override
             public void onChanged(List<Product> products) {
                 binding.swipeRefresh.setRefreshing(false);
-                AdminProductItemAdapter adapter=new AdminProductItemAdapter(products,getActivity());
+                adapter=new AdminProductItemAdapter(products,getActivity());
                 recyclerView.setAdapter(adapter);
-                LinearLayoutManager manager = new GridLayoutManager(getContext(),2,LinearLayoutManager.VERTICAL,false);
-                recyclerView.setLayoutManager(manager);
+                adapter.onDeleteProductClickListener(new AdminProductItemAdapter.OnDeleteProductClickListener() {
+                    @Override
+                    public void onClicked(Product product) {
+                        AlertDeleteProductFragment alertDeleteProductFragment= new AlertDeleteProductFragment();
+                        alertDeleteProductFragment.addOnDeleteConfirmListener(new AlertDeleteProductFragment.OnDeleteProductConfirmListener() {
+                            @Override
+                            public void confirm() {
+                                ManipulateProductDetails manipulateProductDetails =new ManipulateProductDetails();
+                                manipulateProductDetails.delete(product.docId, product.imagePath);
+                                manipulateProductDetails.addOnProductDeleteListener(new ManipulateProductDetails.OnProductDeleteListener() {
+                                    @Override
+                                    public void onSuccess() {
+                                        fetchProductsDetailsModel.fetchAll();
+                                        alertDeleteProductFragment.dismiss();
+                                        adapter.dataSetChanged();
+                                        Toast.makeText(getContext(),"Deleted Product Successfully",Toast.LENGTH_LONG).show();
+                                    }
+
+                                    @Override
+                                    public void onFailure(Exception e) {
+                                        Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+                            }
+                        });
+                        alertDeleteProductFragment.show(getParentFragmentManager(),"DeleteFragment");
 
 
+                    }
+                });
             }
         });
+        LinearLayoutManager manager = new GridLayoutManager(getContext(),2,LinearLayoutManager.VERTICAL,false);
+        recyclerView.setLayoutManager(manager);
         recyclerView.addItemDecoration(new RecyclerViewMargin(25,1000));
         binding.root.addView(recyclerView);
         fetchProductsDetailsModel._status.observe(getViewLifecycleOwner(), new Observer<Status>() {

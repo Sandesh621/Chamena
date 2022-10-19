@@ -20,7 +20,7 @@ public class FileUploader {
 
     FileUploaderInterface uploaderInterface;
      public interface  FileUploaderInterface {
-        void onSuccess(String url);
+        void onSuccess(String url,String imagePath);
         void  onFailure(Exception e);
     }
 
@@ -47,7 +47,7 @@ public class FileUploader {
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
-                    uploaderInterface.onSuccess(downloadUri.toString());
+                    uploaderInterface.onSuccess(downloadUri.toString(), finalStorageReference.getPath());
                 }else{
                     uploaderInterface.onFailure(task.getException());
                 }

@@ -142,10 +142,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Check user is login or not
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
             menu.removeItem(R.id.add_product);
+            menu.removeItem(R.id.orders);
+            menu.removeItem(R.id.myorder);
             menu.removeItem(R.id.logout);
         }
         if(!isAdmin()){
+            menu.removeItem(R.id.orders);
             menu.removeItem(R.id.add_product);
+        }else{
+            menu.removeItem(R.id.myorder);
         }
     }
     void logout(){

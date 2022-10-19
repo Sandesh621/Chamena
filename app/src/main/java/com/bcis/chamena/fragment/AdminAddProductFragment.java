@@ -41,6 +41,7 @@ public class AdminAddProductFragment extends Fragment  {
     AdminAddprdBinding binding;
    private ActivityResultLauncher<Intent> launcher;
    String imageUrl="";
+   String imagePath="";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,8 +59,9 @@ public class AdminAddProductFragment extends Fragment  {
                             uploader.upload(uri);
                             uploader.addOnFileUploaderListener(new FileUploader.FileUploaderInterface() {
                                 @Override
-                                public void onSuccess(String url) {
+                                public void onSuccess(String url,String path) {
                                     imageUrl=url;
+                                    imagePath=path;
                                     checkSubmitButtonVisibility();
                                 }
 
@@ -108,7 +110,7 @@ public class AdminAddProductFragment extends Fragment  {
                 String productName = binding.productname.getText().toString();
                 Number price = Float.parseFloat(binding.productprice.getText().toString());
                 String category =binding.productcat.getText().toString();
-                Product product = new Product(FirebaseAuth.getInstance().getCurrentUser().getUid(),productName,price,category,imageUrl);
+                Product product = new Product(FirebaseAuth.getInstance().getCurrentUser().getUid(),productName,price,category,imageUrl,imagePath);
                 addData(product);
             }
         });

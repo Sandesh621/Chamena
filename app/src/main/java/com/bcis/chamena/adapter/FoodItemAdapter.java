@@ -1,5 +1,6 @@
 package com.bcis.chamena.adapter;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -8,14 +9,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bcis.chamena.R;
 import com.bcis.chamena.databinding.FoodItemBinding;
+import com.bcis.chamena.model.Product;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FoodItemAdapter extends RecyclerView.Adapter<FoodItemAdapter.FoodItemViewHolder> {
-    ArrayList<String> items;
-
-    public FoodItemAdapter(ArrayList<String> items){
+    List<Product> items;
+    Context context;
+    public FoodItemAdapter(List<Product> items,Context context){
       this.items=items;
+      this.context=context;
     }
 
     @NonNull
@@ -27,7 +32,9 @@ public class FoodItemAdapter extends RecyclerView.Adapter<FoodItemAdapter.FoodIt
 
     @Override
     public void onBindViewHolder(@NonNull FoodItemViewHolder holder, int position) {
-       // holder.binding.textview.setText(items.get(position));
+       holder.binding.price.setText("Rs "+items.get(position).price.toString());
+       holder.binding.productname.setText(items.get(position).productName);
+        Glide.with(context).load(items.get(position).productUrl).into(holder.binding.productImage);
     }
 
     @Override

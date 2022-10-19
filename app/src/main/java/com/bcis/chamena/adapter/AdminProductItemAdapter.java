@@ -1,6 +1,5 @@
 package com.bcis.chamena.adapter;
 
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -9,7 +8,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bcis.chamena.R;
-import com.bcis.chamena.databinding.FoodItemBinding;
+import com.bcis.chamena.common.Setting;
+import com.bcis.chamena.common.SettingPref;
 import com.bcis.chamena.databinding.ProductItemBinding;
 import com.bcis.chamena.model.Product;
 import com.bumptech.glide.Glide;
@@ -23,7 +23,16 @@ public class AdminProductItemAdapter extends RecyclerView.Adapter<AdminProductIt
       this.items=items;
       this.activity=activity;
     }
-
+    private  OnDeleteProductClickListener listener;
+    public interface OnDeleteProductClickListener{
+        void onClicked(Product product);
+    }
+    public void onDeleteProductClickListener(OnDeleteProductClickListener listener){
+        this.listener=listener;
+    }
+    public void dataSetChanged(){
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public FoodItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -34,9 +43,27 @@ public class AdminProductItemAdapter extends RecyclerView.Adapter<AdminProductIt
     @Override
     public void onBindViewHolder(@NonNull FoodItemViewHolder holder, int position) {
         Glide.with(activity).load(items.get(position).productUrl).into(holder.binding.image);
-        holder.binding.price.setText(items.get(position).price.toString());
-        holder.binding.productname.setText(items.get(position).productName);
+        Setting setting = new SettingPref(activity).getSettingPref();
+        if(setting!=null){
+            holder.binding.price.setText(setting.currencyCode.isEmpty()?"Rs ":"$ "+items.get(position).price.toString());
+        }else{
+            holder.binding.price.setText("Rs "+items.get(position).price.toString());
+        }
 
+        holder.binding.productname.setText(items.get(position).productName);
+        int pos = position;
+        holder.binding.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClicked(items.get(pos));
+            }
+        });
+        holder.binding.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override
