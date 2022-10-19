@@ -10,7 +10,8 @@ public class CartViewModel extends ViewModel {
 
     private MutableLiveData<ArrayList<Cart>> carts = new MutableLiveData<>();
     public LiveData<ArrayList<Cart>> _carts = carts;
-    public MutableLiveData<Float> totalPrice = new MutableLiveData<>();
+    private MutableLiveData<Float> totalPrice = new MutableLiveData<>();
+    public LiveData<Float> _totalPrice = totalPrice;
     public void getCartItems(){
         carts.setValue(CartModel.carts);
     }

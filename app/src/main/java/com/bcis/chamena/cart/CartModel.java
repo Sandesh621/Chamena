@@ -26,7 +26,6 @@ public class CartModel {
                 alreadyInCart=true;
                 int orderItems = item.orderItems;
                 orderItems+=1;
-                Log.e("Count", String.valueOf(orderItems));
                 item.orderItems=orderItems;
                break;
             }
@@ -54,7 +53,6 @@ public class CartModel {
             carts.remove(cart);
             return;
         }
-
         save();
     }
 
@@ -66,6 +64,12 @@ public class CartModel {
       String cartData = gson.toJson(carts);
       editor.putString("cart",cartData);
       editor.commit();
+   }
+   public static void clearAllData(){
+       SharedPreferences pref = context.getSharedPreferences("cart",Context.MODE_PRIVATE);
+       SharedPreferences.Editor editor = pref.edit();
+       editor.clear();
+       editor.commit();
    }
    public static void init(){
        SharedPreferences pref = context.getSharedPreferences("cart",Context.MODE_PRIVATE);

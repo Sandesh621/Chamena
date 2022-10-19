@@ -30,7 +30,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemViewHo
       this.items=items;
       this.context=context;
     }
-
+    private OnCartManipulateListener listener;
+    public interface  OnCartManipulateListener{
+        void onChange(Cart cart,boolean status);
+    }
+    public  void onCartManipulationListener(OnCartManipulateListener listener){
+        this.listener=listener;
+    }
     @NonNull
     @Override
     public CartItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -45,6 +51,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemViewHo
     public void onBindViewHolder(@NonNull CartItemViewHolder holder, int position) {
        holder.binding.price.setText("Rs "+items.get(position).productPrice.toString());
        holder.binding.productname.setText(items.get(position).productName);
+       holder.binding.orderq.setText(String.valueOf(items.get(position).orderItems));
+       holder.binding.plus.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               listener.onChange(items.get(position),true);
+           }
+       });
+       holder.binding.less.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               listener.onChange(items.get(position),false);
+           }
+       });
     }
 
     @Override
