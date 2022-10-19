@@ -52,16 +52,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartItemViewHo
        holder.binding.price.setText("Rs "+items.get(position).productPrice.toString());
        holder.binding.productname.setText(items.get(position).productName);
        holder.binding.orderq.setText(String.valueOf(items.get(position).orderItems));
+       int pos =position;
+     Glide.with(context).load(items.get(position).imageUrl).into(holder.binding.image);
        holder.binding.plus.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               listener.onChange(items.get(position),true);
+               listener.onChange(items.get(pos),true);
            }
        });
        holder.binding.less.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               listener.onChange(items.get(position),false);
+               listener.onChange(items.get(pos),false);
            }
        });
     }

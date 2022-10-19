@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.bcis.chamena.R;
 import com.bcis.chamena.adapter.CartAdapter;
 import com.bcis.chamena.common.RecyclerViewMargin;
+import com.bcis.chamena.common.UserPref;
 import com.bcis.chamena.databinding.ActivityCartBinding;
 import com.bcis.chamena.databinding.EmptyCartBinding;
 import com.bcis.chamena.databinding.UnauthenticateSuggestionLayoutBinding;
@@ -140,14 +141,16 @@ public class CartActivity extends AppCompatActivity {
         }
         String userId= FirebaseAuth.getInstance().getCurrentUser().getUid();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+        String fullName = new UserPref(null,getApplicationContext()).getUserPref().fullName;
         db.runTransaction(new Transaction.Function<Object>() {
             @Nullable
             @Override
             public Object apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
                 Number timestamp=System.currentTimeMillis();
                 for (Cart cart:CartModel.carts){
-                    CartCheckoutHelper helper = new CartCheckoutHelper(cart.docId,timestamp,cart.orderItems,cart.productPrice,userId);
+
+                    CartCheckoutHelper helper = new CartCheckoutHelper(cart.docId,timestamp,cart.orderItems,cart.productPrice,userId,
+                            cart.productName,fullName,cart.imageUrl);
                     DocumentReference reference = db.collection("orders").document();
                     transaction.set(reference,helper);
                 }
@@ -184,12 +187,18 @@ class CartCheckoutHelper{
     public  int orderItems;
     public  Number price;
     public  String orderBy;
+    public String productName;
+    public String orderByName;
+    public String url;
 
-    public CartCheckoutHelper(String productId,Number timestamp, int orderItems, Number price, String orderBy) {
+    public CartCheckoutHelper(String productId, Number timestamp, int orderItems, Number price, String orderBy, String productName, String orderByName, String url) {
         this.productId = productId;
         this.timestamp = timestamp;
         this.orderItems = orderItems;
         this.price = price;
         this.orderBy = orderBy;
+        this.productName = productName;
+        this.orderByName = orderByName;
+        this.url = url;
     }
 }
