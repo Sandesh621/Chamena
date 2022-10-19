@@ -3,18 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Chamena/app/src/main/res/layout/activity_cart.xml" value="0.259375" />
         <entry key="..\:/Chamena/app/src/main/res/layout/activity_cartdata.xml" value="0.259375" />
         <entry key="..\:/Chamena/app/src/main/res/layout/activity_cartdata1.xml" value="0.259375" />
         <entry key="..\:/Chamena/app/src/main/res/layout/admin_addprd.xml" value="0.259375" />
         <entry key="..\:/Chamena/app/src/main/res/layout/admin_home_layout.xml" value="0.259375" />
         <entry key="..\:/Chamena/app/src/main/res/layout/admin_orders.xml" value="0.259375" />
         <entry key="..\:/Chamena/app/src/main/res/layout/alert_delete_product_dialog.xml" value="0.259375" />
+        <entry key="..\:/Chamena/app/src/main/res/layout/cart_item.xml" value="0.264" />
         <entry key="..\:/Chamena/app/src/main/res/layout/edit.xml" value="0.259375" />
+        <entry key="..\:/Chamena/app/src/main/res/layout/empty_cart.xml" value="0.259375" />
         <entry key="..\:/Chamena/app/src/main/res/layout/food_item.xml" value="0.264" />
         <entry key="..\:/Chamena/app/src/main/res/layout/food_item_layout.xml" value="0.259375" />
         <entry key="..\:/Chamena/app/src/main/res/layout/greet_layout.xml" value="0.2" />
         <entry key="..\:/Chamena/app/src/main/res/layout/product_item.xml" value="0.2" />
+        <entry key="..\:/Chamena/app/src/main/res/layout/unauthenticate_suggestion_layout.xml" value="0.25833333333333336" />
         <entry key="..\:/Chamena/app/src/main/res/layout/user_home_layout.xml" value="0.259375" />
+        <entry key="..\:/Chamena/app/src/main/res/menu/chamena_navbar.xml" value="0.259375" />
         <entry key="..\:/Chamena/app/src/main/res/menu/drawer_menu.xml" value="0.259375" />
         <entry key="..\:/Project/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.185" />
         <entry key="..\:/Project/app/src/main/res/drawable/button.xml" value="0.1295" />

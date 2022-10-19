@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 
 import com.bcis.chamena.MainActivity;
 import com.bcis.chamena.R;
+import com.bcis.chamena.cart.CartModel;
 import com.bcis.chamena.common.FetchUserDetailsModel;
 import com.bcis.chamena.common.Setting;
 import com.bcis.chamena.common.SettingPref;
@@ -43,6 +44,8 @@ public class SplashActivity extends AppCompatActivity {
 
       Animation animationUtils=  AnimationUtils.loadAnimation(this, R.anim.splash_anim);
       binding.splashImage.startAnimation(animationUtils);
+        CartModel.context = getApplicationContext();
+        CartModel.init();
         // Todo:Splash Screen
       Handler handler=new Handler();
         handler.postDelayed(new Runnable() {
@@ -51,12 +54,14 @@ public class SplashActivity extends AppCompatActivity {
                 fetch(getApplicationContext());
             }
         },3000);
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         fetchSetting();
+
     }
 
     public   void fetch(Context context){

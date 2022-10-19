@@ -16,6 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bcis.chamena.R;
 import com.bcis.chamena.adapter.FoodItemAdapter;
+import com.bcis.chamena.cart.CartModel;
 import com.bcis.chamena.common.FetchProductsDetailsModel;
 import com.bcis.chamena.common.RecyclerViewMargin;
 import com.bcis.chamena.common.Status;
@@ -39,25 +40,26 @@ public class UserHomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = UserHomeLayoutBinding.inflate(getLayoutInflater());
         greetLayoutBinding = GreetLayoutBinding.inflate(getLayoutInflater());
+        CartModel.context = getContext();
         bindView();
         return binding.getRoot();
     }
 
     void bindView(){
+        FetchProductsDetailsModel fetchProductsDetailsModel = new FetchProductsDetailsModel();
         binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 binding.swipeRefresh.setRefreshing(false);
+               // fetchProductsDetailsModel.fetchAllProductWithGroupingCategory();
             }
         });
         if(FirebaseAuth.getInstance().getCurrentUser()!=null){
             greetLayoutBinding.name.setText(new UserPref(null,getContext()).getUserPref().fullName);
             binding.root.addView(greetLayoutBinding.getRoot());
         }
-        FetchProductsDetailsModel fetchProductsDetailsModel = new FetchProductsDetailsModel();
+
         fetchProductsDetailsModel.fetchAllProductWithGroupingCategory();
-
-
         fetchProductsDetailsModel._productsWithCategory.observe(getViewLifecycleOwner(), new Observer<List<ProductSecond>>() {
             @Override
             public void onChanged(List<ProductSecond> productSeconds) {
@@ -72,6 +74,7 @@ public class UserHomeFragment extends Fragment {
                     foodRecyclerView.setHasFixedSize(true);
                     foodRecyclerView.addItemDecoration(new RecyclerViewMargin(25,productSecond.products.size()));
                     foodRecyclerView.setAdapter(adapter);
+                    binding.root.removeView(foodItemBinding.getRoot());
                     binding.root.addView(foodItemBinding.getRoot());
                 }
             }
@@ -83,6 +86,7 @@ public class UserHomeFragment extends Fragment {
                 switch (status){
                     case COMPLETED:
                     case FAILURE:
+                        binding.swipeRefresh.setRefreshing(false);
                         binding.progress.setVisibility(View.GONE);
                 }
             }

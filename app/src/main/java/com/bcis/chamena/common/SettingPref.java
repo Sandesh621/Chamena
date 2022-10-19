@@ -28,7 +28,7 @@ public class SettingPref {
 
     public void saveSetting(Setting setting) {
         String json = gson.toJson(setting);
-        editor.putString("data", json);
+        editor.putString("currency_code", json);
         editor.commit();
     }
 
